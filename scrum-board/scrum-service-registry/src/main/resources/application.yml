@@ -3,5 +3,11 @@ server:
 
 eureka:
   client:
+    instance:
+      hostname: localhost
+    serviceUrl:
+      defaultZone: http://localhost:1111
     registerWithEureka: false
     fetchRegistry: false
+    
+    

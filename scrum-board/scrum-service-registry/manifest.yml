@@ -1,5 +1,5 @@
 ---
 applications:
-- name: service-registry
+- name: scrum-service-registry
   memory: 256M
-  path: target/service-registry.jar
+  path: target/scrum-service-registry.jar
