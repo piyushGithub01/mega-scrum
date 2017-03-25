@@ -1,0 +1,5 @@
+---
+applications:
+- name: service-registry
+  memory: 256M
+  path: target/service-registry.jar

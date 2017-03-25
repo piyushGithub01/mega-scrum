@@ -1,0 +1,7 @@
+---
+applications:
+- name: workitem-service
+  memory: 256M
+  path: target/workitem-service.jar
+  services:
+      - service-registry
