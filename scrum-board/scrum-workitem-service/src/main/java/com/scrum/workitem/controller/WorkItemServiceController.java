@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import com.scrum.common.model.workitem.args.CreateWorkItemArgs;
-import com.scrum.common.model.workitem.args.DeleteWorkItemArgs;
-import com.scrum.common.model.workitem.args.UpdateWorkItemStatusArgs;
-import com.scrum.common.model.workitem.args.WorkItemModel;
+import com.scrum.common.model.workitem.args.WorkitemModel;
 import com.scrum.persistenceapi.workitem.command.CreateWorkItemCommand;
 import com.scrum.persistenceapi.workitem.command.DeleteWorkItemCommand;
 import com.scrum.persistenceapi.workitem.command.UpdateWorkItemStatusCommand;
@@ -47,10 +44,13 @@ public class WorkItemServiceController {
 	@Autowired
 	private GetWorkItemByNameQuery getWorkItemByNameQuery;
 	
+	/**
+	 *   Workitem related rest api 
+	 */
 	@RequestMapping(value = "/workitem/create", method = RequestMethod.POST)
-    public @ResponseBody DeferredResult<WorkItemModel> createWorkItem(@RequestBody CreateWorkItemArgs workItemModel) {
+    public @ResponseBody DeferredResult<WorkitemModel> createWorkItem(@RequestBody WorkitemModel workItemModel) {
 		LOGGER.info("received request to create workitem with arguments : {}",workItemModel);
-    	DeferredResult<WorkItemModel> deferredResult = new DeferredResult<WorkItemModel>();
+    	DeferredResult<WorkitemModel> deferredResult = new DeferredResult<WorkitemModel>();
     	deferredResult.onTimeout(() -> {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
@@ -68,7 +68,7 @@ public class WorkItemServiceController {
     }
 	
 	@RequestMapping(value = "/workitem/delete", method = RequestMethod.PUT)
-    public @ResponseBody DeferredResult<Boolean> deleteWorkItem(@RequestBody DeleteWorkItemArgs workItemModel) {
+    public @ResponseBody DeferredResult<Boolean> deleteWorkItem(@RequestBody WorkitemModel workItemModel) {
 		LOGGER.info("received request to delete workitem with arguments : {}",workItemModel);
         DeferredResult<Boolean> deferredResult = new DeferredResult<Boolean>();
     	deferredResult.onTimeout(() -> {
@@ -88,9 +88,9 @@ public class WorkItemServiceController {
     }
 	
 	@RequestMapping(value = "/workitem/update-status", method = RequestMethod.PUT)
-    public @ResponseBody DeferredResult<WorkItemModel> updateWorkItemStatus(@RequestBody UpdateWorkItemStatusArgs workItemModel) {
+    public @ResponseBody DeferredResult<WorkitemModel> updateWorkItemStatus(@RequestBody WorkitemModel workItemModel) {
 		LOGGER.info("received request to update workitem status with arguments : {}",workItemModel);
-        DeferredResult<WorkItemModel> deferredResult = new DeferredResult<WorkItemModel>();
+        DeferredResult<WorkitemModel> deferredResult = new DeferredResult<WorkitemModel>();
     	deferredResult.onTimeout(() -> {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
@@ -108,9 +108,9 @@ public class WorkItemServiceController {
     }
 	
 	@RequestMapping(value = "/workitem/get-all-workitems", method = RequestMethod.GET)
-    public @ResponseBody DeferredResult<List<WorkItemModel>> getAllWorkItems() {
+    public @ResponseBody DeferredResult<List<WorkitemModel>> getAllWorkItems() {
 		LOGGER.info("received request to get all workitem ");
-        DeferredResult<List<WorkItemModel>> deferredResult = new DeferredResult<List<WorkItemModel>>();
+        DeferredResult<List<WorkitemModel>> deferredResult = new DeferredResult<List<WorkitemModel>>();
     	deferredResult.onTimeout(() -> {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
@@ -127,20 +127,20 @@ public class WorkItemServiceController {
     	return deferredResult;
     }
 	
-	@RequestMapping(value = "/workitem/get-by-name/{name}", method = RequestMethod.GET)
-	public @ResponseBody DeferredResult<WorkItemModel> getWorkItemByName(@PathVariable String name) {
-		LOGGER.info("received request to get workitem by name: {}", name);
-		DeferredResult<WorkItemModel> deferredResult = new DeferredResult<WorkItemModel>();
+	@RequestMapping(value = "/workitem/get-by-id/{id}", method = RequestMethod.GET)
+	public @ResponseBody DeferredResult<WorkitemModel> getWorkItemByName(@PathVariable String id) {
+		LOGGER.info("received request to get workitem by id: {}", id);
+		DeferredResult<WorkitemModel> deferredResult = new DeferredResult<WorkitemModel>();
 		deferredResult.onTimeout(() -> {
 			deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
 		});
-		CompletableFuture.supplyAsync(() -> { return getWorkItemByNameQuery.executeQuery(name); }, 
+		CompletableFuture.supplyAsync(() -> { return getWorkItemByNameQuery.executeQuery(id); }, 
 				WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
 		.whenCompleteAsync((result, throwable) -> {
 			if(null != throwable){
 				deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(throwable.getMessage()));
 			}else{
-				LOGGER.info("successfully retrived workitem by name {} ", name);
+				LOGGER.info("successfully retrived workitem by id {} ", id);
 				deferredResult.setResult(result);
 			}
 		});

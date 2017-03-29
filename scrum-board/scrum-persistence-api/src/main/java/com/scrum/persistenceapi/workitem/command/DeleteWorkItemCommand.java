@@ -5,20 +5,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scrum.common.command.Command;
-import com.scrum.common.model.workitem.args.DeleteWorkItemArgs;
-import com.scrum.datapersistence.repository.WorkItemRepository;
+import com.scrum.common.model.workitem.args.WorkitemModel;
+import com.scrum.datapersistence.repository.WorkitemRepository;
 
 @Component
-public class DeleteWorkItemCommand implements Command<DeleteWorkItemArgs, Boolean> {
+public class DeleteWorkItemCommand implements Command<WorkitemModel, Boolean> {
 
 	@Autowired
-	private WorkItemRepository workItemRepository;
+	private WorkitemRepository workItemRepository;
 	
 	@Override
 	@Transactional
-	public Boolean executeCommand(DeleteWorkItemArgs model) {
+	public Boolean executeCommand(WorkitemModel model) {
 		
-		workItemRepository.delete(model.getName());
+		workItemRepository.delete(model.getWorkitemId());
 		return Boolean.TRUE;
 		
 	}

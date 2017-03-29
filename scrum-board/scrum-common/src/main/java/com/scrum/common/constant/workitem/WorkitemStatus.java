@@ -1,13 +1,13 @@
 /**
  * 
  */
-package com.scrum.common.constant.workitemStatus;
+package com.scrum.common.constant.workitem;
 
 /**
  * @author PIYUSH THAKKAR
  *
  */
-public enum WorkItemStatus {
+public enum WorkitemStatus {
 	Todo,
 	Development,
 	Code,

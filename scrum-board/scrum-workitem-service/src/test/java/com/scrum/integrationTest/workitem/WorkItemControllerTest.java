@@ -23,10 +23,10 @@ import org.springframework.util.concurrent.SuccessCallback;
 import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import com.scrum.common.constant.workitemStatus.WorkItemStatus;
+import com.scrum.common.constant.workitem.WorkitemStatus;
 import com.scrum.common.model.workitem.args.CreateWorkItemArgs;
 import com.scrum.common.model.workitem.args.UpdateWorkItemStatusArgs;
-import com.scrum.common.model.workitem.args.WorkItemModel;
+import com.scrum.common.model.workitem.args.WorkitemModel;
 import com.scrum.workitem.WorkItemApplication;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -60,7 +60,7 @@ public class WorkItemControllerTest {
 
         HttpEntity<?> requestEntity = new HttpEntity<>(req_payload, headers);
         
-		DeferredResult<WorkItemModel> deferredResult2 = initiateAsyncCreateWorkItemReq(url, method, requestEntity);
+		DeferredResult<WorkitemModel> deferredResult2 = initiateAsyncCreateWorkItemReq(url, method, requestEntity);
 		deferredResult2.setResultHandler(this::onProcessed);
 		
 	}
@@ -70,7 +70,7 @@ public class WorkItemControllerTest {
 
 		UpdateWorkItemStatusArgs newWorkItem = UpdateWorkItemStatusArgs.Builder.newBuilder()
 											.setName("3")
-											.setStatus(WorkItemStatus.Done)
+											.setStatus(WorkitemStatus.Done)
 											.build();
 		String url = "http://localhost:1112/workitem/update-status";
 		HttpMethod method = HttpMethod.PUT;
@@ -87,22 +87,22 @@ public class WorkItemControllerTest {
 
         HttpEntity<?> requestEntity = new HttpEntity<>(req_payload, headers);
         
-		DeferredResult<WorkItemModel> deferredResult2 = initiateAsyncCreateWorkItemReq(url, method, requestEntity);
+		DeferredResult<WorkitemModel> deferredResult2 = initiateAsyncCreateWorkItemReq(url, method, requestEntity);
 		deferredResult2.setResultHandler(this::onProcessed);
 		
 	}
 	
-	private DeferredResult<WorkItemModel> initiateAsyncCreateWorkItemReq(String url, HttpMethod method, HttpEntity<?> requestEntity) {
-		DeferredResult<WorkItemModel> deferredResult = new DeferredResult<WorkItemModel>(1000L);
+	private DeferredResult<WorkitemModel> initiateAsyncCreateWorkItemReq(String url, HttpMethod method, HttpEntity<?> requestEntity) {
+		DeferredResult<WorkitemModel> deferredResult = new DeferredResult<WorkitemModel>(1000L);
 		deferredResult.onTimeout(() -> {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
 		
-	    ListenableFuture<ResponseEntity<WorkItemModel>> future = AsyncRestTemplate.exchange(url, method, requestEntity, 
-	    		WorkItemModel.class);
-	    future.addCallback(new SuccessCallback<ResponseEntity<WorkItemModel>>(){
+	    ListenableFuture<ResponseEntity<WorkitemModel>> future = AsyncRestTemplate.exchange(url, method, requestEntity, 
+	    		WorkitemModel.class);
+	    future.addCallback(new SuccessCallback<ResponseEntity<WorkitemModel>>(){
 								@Override
-								public void onSuccess(ResponseEntity<WorkItemModel> result) {
+								public void onSuccess(ResponseEntity<WorkitemModel> result) {
 									LOGGER.info("in success of listnable future");
 									deferredResult.setResult(result.getBody());
 								}

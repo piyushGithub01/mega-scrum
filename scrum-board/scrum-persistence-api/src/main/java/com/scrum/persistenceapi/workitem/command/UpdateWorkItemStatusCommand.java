@@ -5,35 +5,32 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scrum.common.command.Command;
-import com.scrum.common.constant.workitemStatus.WorkItemStatus;
-import com.scrum.common.model.workitem.args.UpdateWorkItemStatusArgs;
-import com.scrum.common.model.workitem.args.WorkItemModel;
-import com.scrum.datapersistence.entity.WorkItemEntity;
-import com.scrum.datapersistence.repository.WorkItemRepository;
+import com.scrum.common.model.workitem.args.WorkitemModel;
+import com.scrum.datapersistence.entity.WorkitemEntity;
+import com.scrum.datapersistence.repository.WorkitemRepository;
+import com.scrum.persistenceapi.workitem.converters.WorkitemConverter;
 
 @Component
-public class UpdateWorkItemStatusCommand implements Command<UpdateWorkItemStatusArgs, WorkItemModel> {
+public class UpdateWorkItemStatusCommand implements Command<WorkitemModel, WorkitemModel> {
 
 	@Autowired
-	private WorkItemRepository workItemRepository;
+	private WorkitemRepository workItemRepository;
 	
 	@Override
 	@Transactional
-	public WorkItemModel executeCommand(UpdateWorkItemStatusArgs model) {
+	public WorkitemModel executeCommand(WorkitemModel model) {
 		
-		WorkItemEntity entity = workItemRepository.getOne(model.getName());
+		WorkitemEntity entity = workItemRepository.getOne(model.getWorkitemId());
 		
 		if (entity == null) {
 			return null;
 		}
 		entity.setStatus(model.getStatus().name());
+		entity.setUpdatedBy("SYSTEM");
+//		entity.setUpdatedDate(LocalDateTime.now());
 		
-		WorkItemEntity savedEntity = workItemRepository.save(entity);
-		return WorkItemModel.Builder.newBuilder()
-				.setName(savedEntity.getName())
-				.setDescription(savedEntity.getDescription())
-				.setStatus(WorkItemStatus.valueOf(savedEntity.getStatus()))
-				.build();
+		WorkitemEntity savedEntity = workItemRepository.save(entity);
+		return WorkitemConverter.convertToModel(savedEntity);
 	}
 	
 }
