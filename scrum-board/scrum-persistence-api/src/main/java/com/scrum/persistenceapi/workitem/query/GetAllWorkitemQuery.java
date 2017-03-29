@@ -16,9 +16,9 @@ import com.scrum.datapersistence.repository.WorkitemRepository;
 import com.scrum.persistenceapi.workitem.converters.WorkitemConverter;
 
 @Component
-public class GetAllWorkItemQuery implements Query<String, List<WorkitemModel>> {
+public class GetAllWorkitemQuery implements Query<String, List<WorkitemModel>> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(GetAllWorkItemQuery.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GetAllWorkitemQuery.class);
 	
 	@Autowired
 	private WorkitemRepository workItemRepository;

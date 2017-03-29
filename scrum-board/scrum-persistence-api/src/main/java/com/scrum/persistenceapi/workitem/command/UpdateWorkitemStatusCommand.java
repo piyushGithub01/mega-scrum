@@ -11,7 +11,7 @@ import com.scrum.datapersistence.repository.WorkitemRepository;
 import com.scrum.persistenceapi.workitem.converters.WorkitemConverter;
 
 @Component
-public class UpdateWorkItemStatusCommand implements Command<WorkitemModel, WorkitemModel> {
+public class UpdateWorkitemStatusCommand implements Command<WorkitemModel, WorkitemModel> {
 
 	@Autowired
 	private WorkitemRepository workItemRepository;

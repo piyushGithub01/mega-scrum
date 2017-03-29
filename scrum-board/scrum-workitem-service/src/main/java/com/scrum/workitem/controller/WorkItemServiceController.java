@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import com.scrum.common.model.workitem.args.WorkitemAuditModel;
 import com.scrum.common.model.workitem.args.WorkitemModel;
-import com.scrum.persistenceapi.workitem.command.CreateWorkItemCommand;
-import com.scrum.persistenceapi.workitem.command.DeleteWorkItemCommand;
-import com.scrum.persistenceapi.workitem.command.UpdateWorkItemStatusCommand;
-import com.scrum.persistenceapi.workitem.query.GetAllWorkItemQuery;
-import com.scrum.persistenceapi.workitem.query.GetWorkItemByNameQuery;
+import com.scrum.persistenceapi.workitem.command.CreateWorkitemCommand;
+import com.scrum.persistenceapi.workitem.command.DeleteWorkitemCommand;
+import com.scrum.persistenceapi.workitem.command.UpdateWorkitemStatusCommand;
+import com.scrum.persistenceapi.workitem.query.GetAllWorkitemQuery;
+import com.scrum.persistenceapi.workitem.query.GetWorkitemByIdQuery;
+import com.scrum.persistenceapi.workitemAudit.query.GetWorkitemAuditByIdQuery;
 import com.scrum.workitem.WorkItemServiceConfiguration;
 
 @RestController
@@ -30,19 +32,22 @@ public class WorkItemServiceController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WorkItemServiceController.class);
 	
 	@Autowired
-	private CreateWorkItemCommand createWorkItemCommand;
+	private CreateWorkitemCommand createWorkitemCommand;
 	
 	@Autowired
-	private UpdateWorkItemStatusCommand updateWorkItemStatusCommand;
+	private UpdateWorkitemStatusCommand updateWorkitemStatusCommand;
 	
 	@Autowired
-	private DeleteWorkItemCommand deleteWorkItemCommand;
+	private DeleteWorkitemCommand deleteWorkitemCommand;
 	
 	@Autowired
-	private GetAllWorkItemQuery getAllWorkItemQuery;
+	private GetAllWorkitemQuery getAllWorkitemQuery;
 	
 	@Autowired
-	private GetWorkItemByNameQuery getWorkItemByNameQuery;
+	private GetWorkitemByIdQuery getWorkitemByNameQuery;
+	
+	@Autowired
+	private GetWorkitemAuditByIdQuery getWorkitemAuditByIdQuery;
 	
 	/**
 	 *   Workitem related rest api 
@@ -54,7 +59,7 @@ public class WorkItemServiceController {
     	deferredResult.onTimeout(() -> {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
-    	CompletableFuture.supplyAsync(() -> { return createWorkItemCommand.executeCommand(workItemModel); }, 
+    	CompletableFuture.supplyAsync(() -> { return createWorkitemCommand.executeCommand(workItemModel); }, 
     									WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
         .whenCompleteAsync((result, throwable) -> {
         			if(null != throwable){
@@ -74,7 +79,7 @@ public class WorkItemServiceController {
     	deferredResult.onTimeout(() -> {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
-    	CompletableFuture.supplyAsync(() -> { return deleteWorkItemCommand.executeCommand(workItemModel); }, 
+    	CompletableFuture.supplyAsync(() -> { return deleteWorkitemCommand.executeCommand(workItemModel); }, 
     									WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
         .whenCompleteAsync((result, throwable) -> {
         			if(null != throwable){
@@ -94,7 +99,7 @@ public class WorkItemServiceController {
     	deferredResult.onTimeout(() -> {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
-    	CompletableFuture.supplyAsync(() -> { return updateWorkItemStatusCommand.executeCommand(workItemModel); }, 
+    	CompletableFuture.supplyAsync(() -> { return updateWorkitemStatusCommand.executeCommand(workItemModel); }, 
     									WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
         .whenCompleteAsync((result, throwable) -> {
         			if(null != throwable){
@@ -114,7 +119,7 @@ public class WorkItemServiceController {
     	deferredResult.onTimeout(() -> {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
-    	CompletableFuture.supplyAsync(() -> { return getAllWorkItemQuery.executeQuery(""); }, 
+    	CompletableFuture.supplyAsync(() -> { return getAllWorkitemQuery.executeQuery(""); }, 
     									WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
         .whenCompleteAsync((result, throwable) -> {
         			if(null != throwable){
@@ -128,13 +133,13 @@ public class WorkItemServiceController {
     }
 	
 	@RequestMapping(value = "/workitem/get-by-id/{id}", method = RequestMethod.GET)
-	public @ResponseBody DeferredResult<WorkitemModel> getWorkItemByName(@PathVariable String id) {
+	public @ResponseBody DeferredResult<WorkitemModel> getWorkItemById(@PathVariable String id) {
 		LOGGER.info("received request to get workitem by id: {}", id);
 		DeferredResult<WorkitemModel> deferredResult = new DeferredResult<WorkitemModel>();
 		deferredResult.onTimeout(() -> {
 			deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
 		});
-		CompletableFuture.supplyAsync(() -> { return getWorkItemByNameQuery.executeQuery(id); }, 
+		CompletableFuture.supplyAsync(() -> { return getWorkitemByNameQuery.executeQuery(id); }, 
 				WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
 		.whenCompleteAsync((result, throwable) -> {
 			if(null != throwable){
@@ -147,4 +152,26 @@ public class WorkItemServiceController {
 		return deferredResult;
 	}
 	
+	/**
+	 *   Workitem Audit rest api
+	 */
+	@RequestMapping(value = "/workitem/get-audit-by-id/{id}", method = RequestMethod.GET)
+	public @ResponseBody DeferredResult<List<WorkitemAuditModel>> getWorkitemAuditById(@PathVariable String id) {
+		LOGGER.info("received request to get workitem audit by id: {}", id);
+		DeferredResult<List<WorkitemAuditModel>> deferredResult = new DeferredResult<List<WorkitemAuditModel>>();
+		deferredResult.onTimeout(() -> {
+			deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
+		});
+		CompletableFuture.supplyAsync(() -> { return getWorkitemAuditByIdQuery.executeQuery(id); }, 
+				WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
+		.whenCompleteAsync((result, throwable) -> {
+			if(null != throwable){
+				deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(throwable.getMessage()));
+			}else{
+				LOGGER.info("successfully retrived workitem by id {} ", id);
+				deferredResult.setResult(result);
+			}
+		});
+		return deferredResult;
+	}
 }

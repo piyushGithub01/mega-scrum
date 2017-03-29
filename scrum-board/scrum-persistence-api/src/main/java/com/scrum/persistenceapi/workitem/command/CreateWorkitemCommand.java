@@ -14,7 +14,7 @@ import com.scrum.datapersistence.repository.WorkitemRepository;
 import com.scrum.persistenceapi.workitem.converters.WorkitemConverter;
 
 @Component
-public class CreateWorkItemCommand implements Command<WorkitemModel, WorkitemModel> {
+public class CreateWorkitemCommand implements Command<WorkitemModel, WorkitemModel> {
 
 	@Autowired
 	private WorkitemRepository workItemRepository;

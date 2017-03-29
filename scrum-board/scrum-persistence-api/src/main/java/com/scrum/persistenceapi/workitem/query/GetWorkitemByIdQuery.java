@@ -11,7 +11,7 @@ import com.scrum.datapersistence.repository.WorkitemRepository;
 import com.scrum.persistenceapi.workitem.converters.WorkitemConverter;
 
 @Component
-public class GetWorkItemByNameQuery implements Query<String, WorkitemModel> {
+public class GetWorkitemByIdQuery implements Query<String, WorkitemModel> {
 
 	@Autowired
 	private WorkitemRepository workItemRepository;

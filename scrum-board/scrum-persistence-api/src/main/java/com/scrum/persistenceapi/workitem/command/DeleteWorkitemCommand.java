@@ -9,7 +9,7 @@ import com.scrum.common.model.workitem.args.WorkitemModel;
 import com.scrum.datapersistence.repository.WorkitemRepository;
 
 @Component
-public class DeleteWorkItemCommand implements Command<WorkitemModel, Boolean> {
+public class DeleteWorkitemCommand implements Command<WorkitemModel, Boolean> {
 
 	@Autowired
 	private WorkitemRepository workItemRepository;
