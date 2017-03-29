@@ -33,13 +33,18 @@ public class WorkitemAuditEntity {
     WorkitemAuditEntity() {
     }
 
+    public WorkitemAuditEntity(String workitemId, String comment) {
+    	this.workitemId = workitemId;
+    	this.comment = comment;
+    }
+    
     public WorkitemAuditEntity(String workitemAuditId, String workitemId, String comment, 
-    						String createdBy, Date createdDate) {
+    		String createdBy, Date createdDate) {
     	this.workitemAuditId = workitemAuditId;
     	this.workitemId = workitemId;
     	this.comment = comment;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
+    	this.createdBy = createdBy;
+    	this.createdDate = createdDate;
     }
 
 	public String getWorkitemAuditId() {
