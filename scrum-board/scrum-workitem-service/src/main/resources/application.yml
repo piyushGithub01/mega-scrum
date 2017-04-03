@@ -1,6 +1,6 @@
 
 server:
-  port: 1113
+  port: 1112
 
 spring:
   jpa:

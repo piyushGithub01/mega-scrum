@@ -36,7 +36,7 @@ public class UpdateWorkitemStatusCommand implements Command<WorkitemModel, Worki
 		}
 		entity.setStatus(model.getStatus().name());
 		entity.setUpdatedBy("SYSTEM");
-		entity.setCreatedDate(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
+		entity.setUpdatedDate(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
 		
 		WorkitemEntity savedEntity = workItemRepository.save(entity);
 		

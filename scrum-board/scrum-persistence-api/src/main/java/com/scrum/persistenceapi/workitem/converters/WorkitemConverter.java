@@ -26,7 +26,7 @@ public class WorkitemConverter {
 					model.getWorkitemId(),
 					model.getName(),
 					model.getDescription(),
-					model.getStatus().name(),
+					model.getStatus()==null?null:model.getStatus().name(),
 					model.getWorkitemPayload(),
 					model.getCreatedBy(),
 					model.getCreatedDate(),

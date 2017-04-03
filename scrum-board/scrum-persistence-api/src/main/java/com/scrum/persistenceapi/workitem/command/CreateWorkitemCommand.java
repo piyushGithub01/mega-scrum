@@ -33,6 +33,7 @@ public class CreateWorkitemCommand implements Command<WorkitemModel, WorkitemMod
 		WorkitemEntity entity = WorkitemConverter.convertToEntity(model);
 		entity.setStatus(WorkitemStatus.Todo.name());
 		entity.setWorkitemId(UUID.randomUUID().toString());
+		entity.setCreatedBy("SYSTEM");
 		entity.setCreatedDate(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)));
 		WorkitemEntity savedEntity = workItemRepository.save(entity);
 		

@@ -21,6 +21,8 @@ public class GetWorkitemByIdQuery implements Query<String, WorkitemModel> {
 	public WorkitemModel executeQuery(String id) {
 		
 		WorkitemEntity item =  workItemRepository.findOne(id);
+		if (item==null)
+			return null;
 		return WorkitemConverter.convertToModel(item);
 	}
 	
