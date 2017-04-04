@@ -1,3 +1,6 @@
+scrum:
+  orchestration:
+    message: abcd
 
 server:
   port: 1114
