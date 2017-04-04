@@ -7,4 +7,5 @@ Modules in project -
 3. scrum-data-jpa-persistence		spring data jpa persistence layer
 4. scrum-persistence-api			api for data persistence operation
 5. scrum-workitem-service 			exposes restful api for create, update and delete workitem
+6. scrum-orchestration				orchestration to use observer, event sourceing patter
 

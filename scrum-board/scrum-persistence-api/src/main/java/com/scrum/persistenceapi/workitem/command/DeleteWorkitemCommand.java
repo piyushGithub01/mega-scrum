@@ -25,6 +25,8 @@ public class DeleteWorkitemCommand implements Command<WorkitemModel, Boolean> {
 	public Boolean executeCommand(WorkitemModel model) {
 		
 		WorkitemEntity savedEntity = workItemRepository.findOne(model.getWorkitemId());
+		if (savedEntity == null) 
+			return Boolean.TRUE;
 		
 		//save audit
 		WorkitemAuditEntity auditEntity = new WorkitemAuditEntity(savedEntity.getWorkitemId(),

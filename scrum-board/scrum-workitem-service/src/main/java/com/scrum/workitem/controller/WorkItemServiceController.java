@@ -24,7 +24,7 @@ import com.scrum.persistenceapi.workitem.command.UpdateWorkitemStatusCommand;
 import com.scrum.persistenceapi.workitem.query.GetAllWorkitemQuery;
 import com.scrum.persistenceapi.workitem.query.GetWorkitemByIdQuery;
 import com.scrum.persistenceapi.workitemAudit.query.GetWorkitemAuditByIdQuery;
-import com.scrum.workitem.WorkItemServiceConfiguration;
+import com.scrum.workitem.ScrumWorkItemServiceConfiguration;
 
 @RestController
 public class WorkItemServiceController {
@@ -60,7 +60,7 @@ public class WorkItemServiceController {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
     	CompletableFuture.supplyAsync(() -> { return createWorkitemCommand.executeCommand(workItemModel); }, 
-    									WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
+    									ScrumWorkItemServiceConfiguration.SCRUM_WORKITEM_EXECUTOR)
         .whenCompleteAsync((result, throwable) -> {
         			if(null != throwable){
         				deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(throwable.getMessage()));
@@ -80,7 +80,7 @@ public class WorkItemServiceController {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
     	CompletableFuture.supplyAsync(() -> { return deleteWorkitemCommand.executeCommand(workItemModel); }, 
-    									WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
+    									ScrumWorkItemServiceConfiguration.SCRUM_WORKITEM_EXECUTOR)
         .whenCompleteAsync((result, throwable) -> {
         			if(null != throwable){
         				deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(throwable.getMessage()));
@@ -100,7 +100,7 @@ public class WorkItemServiceController {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
     	CompletableFuture.supplyAsync(() -> { return updateWorkitemStatusCommand.executeCommand(workItemModel); }, 
-    									WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
+    									ScrumWorkItemServiceConfiguration.SCRUM_WORKITEM_EXECUTOR)
         .whenCompleteAsync((result, throwable) -> {
         			if(null != throwable){
         				deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(throwable.getMessage()));
@@ -120,7 +120,7 @@ public class WorkItemServiceController {
     		deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
     	});
     	CompletableFuture.supplyAsync(() -> { return getAllWorkitemQuery.executeQuery(""); }, 
-    									WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
+    									ScrumWorkItemServiceConfiguration.SCRUM_WORKITEM_EXECUTOR)
         .whenCompleteAsync((result, throwable) -> {
         			if(null != throwable){
         				deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(throwable.getMessage()));
@@ -140,7 +140,7 @@ public class WorkItemServiceController {
 			deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
 		});
 		CompletableFuture.supplyAsync(() -> { return getWorkitemByNameQuery.executeQuery(id); }, 
-				WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
+				ScrumWorkItemServiceConfiguration.SCRUM_WORKITEM_EXECUTOR)
 		.whenCompleteAsync((result, throwable) -> {
 			if(null != throwable){
 				deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(throwable.getMessage()));
@@ -163,7 +163,7 @@ public class WorkItemServiceController {
 			deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Request timeout occurred."));
 		});
 		CompletableFuture.supplyAsync(() -> { return getWorkitemAuditByIdQuery.executeQuery(id); }, 
-				WorkItemServiceConfiguration.WORKITEM_EXECUTOR)
+				ScrumWorkItemServiceConfiguration.SCRUM_WORKITEM_EXECUTOR)
 		.whenCompleteAsync((result, throwable) -> {
 			if(null != throwable){
 				deferredResult.setErrorResult(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(throwable.getMessage()));

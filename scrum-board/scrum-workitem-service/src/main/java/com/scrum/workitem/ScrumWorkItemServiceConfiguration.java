@@ -14,7 +14,7 @@ import com.scrum.persistenceapi.PersistenceApiConfiguration;
 @EnableAutoConfiguration
 @ComponentScan
 @Import({ PersistenceApiConfiguration.class })
-public class WorkItemServiceConfiguration {
+public class ScrumWorkItemServiceConfiguration {
 
-	public static final ExecutorService WORKITEM_EXECUTOR = Executors.newFixedThreadPool(25);
+	public static final ExecutorService SCRUM_WORKITEM_EXECUTOR = Executors.newFixedThreadPool(25);
 }

@@ -1,0 +1,7 @@
+---
+applications:
+- name: scrum-orchestration
+  memory: 256M
+  path: target/scrum-orchestration.jar
+  services:
+      - scrum-service-registry
