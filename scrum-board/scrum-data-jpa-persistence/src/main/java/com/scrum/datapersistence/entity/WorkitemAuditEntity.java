@@ -20,7 +20,7 @@ public class WorkitemAuditEntity {
     @Column(nullable = false, name="WORKITEM_ID")
     private String workitemId;
     
-    @Column(nullable = true, name="COMMENT")
+    @Column(nullable = true, name="COMMENTS")
     private String comment;
     
     @Column(nullable = true, name="CREATED_BY")

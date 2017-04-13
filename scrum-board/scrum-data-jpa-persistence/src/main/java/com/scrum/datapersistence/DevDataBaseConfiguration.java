@@ -25,7 +25,7 @@ public class DevDataBaseConfiguration {
     @Value("${datasource.password}")
     private String password;
 
-    @Value("${dataource.driverClassName}")
+    @Value("${datasource.driverClassName}")
     private String driverClassName;
 
     @Bean
