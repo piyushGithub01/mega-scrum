@@ -28,6 +28,7 @@
     	<module>scrum-common</module>
     	<module>scrum-data-jpa-persistence</module>
     	<module>scrum-persistence-api</module>
+    	<module>scrum-configuration-server</module>
     	<module>scrum-workitem-service</module>
     	<module>scrum-orchestration</module>
 	</modules>	

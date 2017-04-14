@@ -1,0 +1,17 @@
+
+server:
+  port: 1116
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
+
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config

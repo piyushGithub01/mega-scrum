@@ -1,0 +1,7 @@
+---
+applications:
+- name: scrum-configuration-server
+  memory: 128M
+  path: target/scrum-configuration-server.jar
+  services:
+      - scrum-service-registry

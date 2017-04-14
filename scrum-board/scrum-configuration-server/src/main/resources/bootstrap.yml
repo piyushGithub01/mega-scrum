@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: scrum-configuration-server
+  profiles:
+    active: native
