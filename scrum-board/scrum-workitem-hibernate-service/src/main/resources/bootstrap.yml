@@ -1,7 +1,6 @@
-    
 spring:
   application:
-    name: scrum-orchestration
+    name: scrum-workitem-hibernate-service
   cloud:
     config:
       enabled: true

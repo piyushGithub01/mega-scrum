@@ -31,6 +31,8 @@
     	<module>scrum-configuration-server</module>
     	<module>scrum-workitem-service</module>
     	<module>scrum-orchestration</module>
+    	<module>scrum-workitem-jdbc-service</module>
+    	<module>scrum-workitem-hibernate-service</module>
 	</modules>	
 
     <!-- <build>

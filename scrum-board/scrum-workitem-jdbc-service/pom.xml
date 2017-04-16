@@ -9,12 +9,12 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>scrum-orchestration</artifactId>
+	<artifactId>scrum-workitem-jdbc-service</artifactId>
 	
 	<packaging>jar</packaging>
 	
-	<name>Scrum-Orchestration</name>
-	<description>Scrum Orchestration for Scrum Board</description>
+	<name>Scrum-WorkItem-Jdbc-Service</name>
+	<description>Scrum WorkItem Jdbc Service for Scrum Board</description>
 	
 	<dependencies>
         <dependency>
@@ -26,13 +26,22 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-feign</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-hystrix</artifactId>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
         </dependency>
+        <dependency>
+    		<groupId>mysql</groupId>
+    		<artifactId>mysql-connector-java</artifactId>
+    		<version>5.1.38</version>
+		</dependency>
+        <dependency>
+  			<groupId>org.springframework.boot</groupId>
+  			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
         <dependency>
             <groupId>scrumboard</groupId>
             <artifactId>scrum-common</artifactId>

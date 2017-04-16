@@ -1,0 +1,7 @@
+---
+applications:
+- name: scrum-workitem-hibernate-service
+  memory: 256M
+  path: target/scrum-workitem-hibernate-service.jar
+  services:
+      - scrum-service-registry

@@ -1,0 +1,7 @@
+---
+applications:
+- name: scrum-workitem-jdbc-service
+  memory: 256M
+  path: target/scrum-workitem-jdbc-service.jar
+  services:
+      - scrum-service-registry
