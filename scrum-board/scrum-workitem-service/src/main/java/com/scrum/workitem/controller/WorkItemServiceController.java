@@ -132,6 +132,12 @@ public class WorkItemServiceController {
     	return deferredResult;
     }
 	
+	@RequestMapping(value = "/workitem/get-all-workitems-simple", method = RequestMethod.GET)
+    public @ResponseBody List<WorkitemModel> getAllWorkItemsSync() {
+		LOGGER.info("received request to get all workitem ");
+        return getAllWorkitemQuery.executeQuery("");
+    }
+	
 	@RequestMapping(value = "/workitem/get-by-id/{id}", method = RequestMethod.GET)
 	public @ResponseBody DeferredResult<WorkitemModel> getWorkItemById(@PathVariable String id) {
 		LOGGER.info("received request to get workitem by id: {}", id);

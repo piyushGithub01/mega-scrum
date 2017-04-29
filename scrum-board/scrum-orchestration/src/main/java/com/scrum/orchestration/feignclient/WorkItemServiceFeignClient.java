@@ -15,5 +15,8 @@ public interface WorkItemServiceFeignClient {
 	
 	@RequestMapping(value = "/workitem/get-all-workitems", method = RequestMethod.GET)
     public @ResponseBody DeferredResult<List<WorkitemModel>> getAllWorkItems();
+	
+	@RequestMapping(value = "/workitem/get-all-workitems-simple", method = RequestMethod.GET)
+    public @ResponseBody List<WorkitemModel> getAllWorkItemsSync();
 
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.scrum.orchestration.action.PublishOpenWorkitemAction;
 
 @RestController
@@ -18,11 +19,17 @@ public class WorkItemOrchestrationController {
 	@Autowired
 	private PublishOpenWorkitemAction publishOpenWorkitemAction;
 	
+	@HystrixCommand(fallbackMethod = "defaultStores")
 	@RequestMapping(value = "/orchestration/get-all-workitems", method = RequestMethod.GET)
     public @ResponseBody boolean getAllWorkItems() {
 		LOGGER.info("orchestration received request to get all workitem ");
 		publishOpenWorkitemAction.publishAllWorkitem();
     	return true;
+    }
+	
+	public @ResponseBody boolean defaultStores() {
+		System.out.println("Hystrix circuit breaker --------------------");
+        return true;
     }
 		
 }
