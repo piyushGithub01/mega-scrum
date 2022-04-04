@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.scrum.persistenceapi.PersistenceApiConfiguration;
 
@@ -14,6 +15,7 @@ import com.scrum.persistenceapi.PersistenceApiConfiguration;
 @EnableAutoConfiguration
 @ComponentScan
 @Import({ PersistenceApiConfiguration.class })
+@EnableTransactionManagement(proxyTargetClass=true)
 public class ScrumWorkItemHibernateServiceConfiguration {
 
 	public static final ExecutorService SCRUM_WORKITEM_EXECUTOR = Executors.newFixedThreadPool(25);
